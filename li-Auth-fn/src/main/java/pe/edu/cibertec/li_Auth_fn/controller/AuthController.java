@@ -11,11 +11,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.cibertec.li_Auth_fn.dto.UsuarioDTO;
 import pe.edu.cibertec.li_Auth_fn.dto.UsuarioResponseDto;
-import pe.edu.cibertec.li_Auth_fn.model.Usuario;
 import pe.edu.cibertec.li_Auth_fn.service.IUsuarioService;
 import pe.edu.cibertec.li_Auth_fn.service.impl.DetailsService;
 
@@ -44,7 +42,7 @@ public class AuthController {
                 UsuarioDTO objUsuario = usuarioService.findByCodigo(codigo);
                 String token = generarToken(objUsuario);
                 UsuarioResponseDto response = new UsuarioResponseDto();
-                response.setIdusuario(objUsuario.getId().intValue()); // Ajusta el nombre del atributo si es diferente
+                response.setIdusuario(objUsuario.getId().intValue());
                 response.setCodigo(objUsuario.getCodigo());
                 response.setToken(token);
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -57,16 +55,16 @@ public class AuthController {
     }
 
     private String generarToken(UsuarioDTO usuario) {
-        String clave = "mi_clave_secreta";  // Cambia esto por una clave más segura
+        String clave = "@Libreria2024";
         List<GrantedAuthority> authorityList = List.of(new SimpleGrantedAuthority(usuario.getRol())); // Cambia según tu lógica de roles
         return Jwts.builder()
-                .setId(usuario.getId().toString())  // Ajusta el nombre del método si es diferente
+                .setId(usuario.getId().toString())
                 .setSubject(usuario.getCodigo())
                 .claim("authorities", authorityList.stream()
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000))  // 1 día
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                 .signWith(SignatureAlgorithm.HS512, clave.getBytes())
                 .compact();
     }

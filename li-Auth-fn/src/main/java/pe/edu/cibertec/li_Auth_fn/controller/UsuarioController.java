@@ -9,16 +9,10 @@ import pe.edu.cibertec.li_Auth_fn.service.IUsuarioService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 
-
     private final IUsuarioService iUsuarioService;
-
-    /*@GetMapping("/{codigo}")
-    public UsuarioDTO obtenerUsuarioPorCodigo(@PathVariable String codigo) {
-        return iUsuarioService.findByCodigo(codigo);
-    }*/
 
     @GetMapping("/{codigo}")
     public ResponseEntity<UsuarioDTO> obtenerUsuarioPorCodigo(@PathVariable String codigo) {

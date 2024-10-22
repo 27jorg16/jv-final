@@ -9,7 +9,7 @@ public class UsuarioConvert {
 
     public UsuarioDTO convertirAUsuarioDTO(Usuario usuario) {
         if (usuario == null) {
-            return null; // Manejo de null
+            return null;
         }
         UsuarioDTO dto = new UsuarioDTO();
         dto.setId(usuario.getId());

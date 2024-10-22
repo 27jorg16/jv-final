@@ -56,7 +56,7 @@ public class AuthController {
 
     private String generarToken(UsuarioDTO usuario) {
         String clave = "@Libreria2024";
-        List<GrantedAuthority> authorityList = List.of(new SimpleGrantedAuthority(usuario.getRol())); // Cambia según tu lógica de roles
+        List<GrantedAuthority> authorityList = List.of(new SimpleGrantedAuthority(usuario.getRol()));
         return Jwts.builder()
                 .setId(usuario.getId().toString())
                 .setSubject(usuario.getCodigo())
